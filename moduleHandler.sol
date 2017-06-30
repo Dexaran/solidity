@@ -395,7 +395,7 @@ contract moduleHandler is owned, announcementTypes {
         require( schelling(modules[_id].addr).configure(aType, value) );
         return true;
     }
-    function freezing(bool forever) external {
+    function freezing(bool _forever, uint256 _freezTime) external {
         /*
             Freezing CORION Platform. Can be called only by the owner.
             Freez can not be recalled!
@@ -403,8 +403,9 @@ contract moduleHandler is owned, announcementTypes {
             @forever    Is it forever or not?
         */
         require( super.isOwner() );
+        if(_freezTime > 40000) { _freezTime = 40000 }
         for ( uint256 a=0 ; a<modules.length ; a++ ) {
-            require( abstractModule(modules[a].addr).disableModule(forever) );
+            require( abstractModule(modules[a].addr).disableModule(_forever, _freezTime) );
         }
     }
 }
