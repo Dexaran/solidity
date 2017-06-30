@@ -1,37 +1,15 @@
 pragma solidity ^0.4.11;
 
-
 import "browser/module.sol";
 import "browser/announcementTypes.sol";
+import "browser/owned.sol";
 
+import "browser/publisher.sol";
 import "browser/token.sol";
 import "browser/provider.sol";
 import "browser/schelling.sol";
-
-
-contract owned {
-    address private owner = msg.sender;
-    
-    function replaceOwner(address newOwner) external returns(bool) {
-        /*
-            Owner replace.
-            
-            @newOwner   Address of new owner.
-        */
-        require( isOwner() );
-        owner = newOwner;
-        return true;
-    }
-    
-    function isOwner() internal returns(bool) {
-        /*
-            Check of owner address.
-            
-            @bool   Owner has called the contract or not 
-        */
-        return owner == msg.sender;
-    }
-}
+import "browser/premium.sol";
+import "browser/ico.sol";
 
 contract abstractModule {
     function connectModule() external returns (bool success) {}
@@ -46,11 +24,6 @@ contract abstractModule {
 
 contract moduleHandler is owned, announcementTypes {
     
-    
-    /// RINKEBY 0xa0b6f1f751B04eE76d5369C35a98a78eF4Ee4a30
-    
-    
-    address public consenSysMultisig;
     struct modules_s {
         address addr;
         bytes32 name;
@@ -173,7 +146,7 @@ contract moduleHandler is owned, announcementTypes {
             @bool       Was there any result or not.
         */
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
-        require( _success && _found && msg.sender == consenSysMultisig );
+        require( _success && _found && modules[_id].name == sha3('Publisher') );
         (_success, _found, _id) = getModuleIDByName(name);
         require( _success && _found );
         require( abstractModule(modules[_id].addr).replaceModule(addr) );
