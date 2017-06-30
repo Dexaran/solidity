@@ -33,6 +33,7 @@ contract moduleHandler is owned, announcementTypes {
     
     modules_s[] public modules;
     address public foundationAddress;
+    address public managementMultisig;
     
     function load(address foundation, bool forReplace, address Token, address Premium, address Publisher, address Schelling, address Provider) {
         /*
@@ -146,7 +147,7 @@ contract moduleHandler is owned, announcementTypes {
             @bool       Was there any result or not.
         */
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
-        require( _success && _found && modules[_id].name == sha3('Publisher') );
+        require( _success && _found && msg.sender == managementMultisig );
         (_success, _found, _id) = getModuleIDByName(name);
         require( _success && _found );
         require( abstractModule(modules[_id].addr).replaceModule(addr) );
