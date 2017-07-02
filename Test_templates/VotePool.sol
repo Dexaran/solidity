@@ -34,6 +34,26 @@ contract ModuleHandler {
  *  will be successfully evaluated.
  *  After the evaluation of the proposal every participant should withdraw his (her) COR tokens.
  * 
+ * 
+ * 
+ *  HOW TO elect a new owner.
+ * 
+ * 1. Choose a community member who deserves to be one of the owners of the CORION platform.
+ * 
+ * 2. Deploy this contract. Input valid COR token contract address,
+ * CORION moduleHandler contract address
+ * and the address of the desired member of the community who will become the owner.
+ * 
+ * 3. Deposit COR into this contract.
+ * 
+ * 4. Evaluate a proposal. Call `evaluate_New_Owner_Election`.
+ * If there will be enough COR tokens at the balance of this contract
+ * then the proposal will be successfully evaluated
+ * and desired member of the community will become the owner.
+ * (75% of total COR supply is required by default)
+ * 
+ * 5. Withdraw remaining COR.
+ * There is no need to keep it here if the proposal was successfully evaluated.
  */
 
 contract VotePool {
