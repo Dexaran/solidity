@@ -33,7 +33,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     
     modules_s[] public modules;
     address public foundationAddress;
-    uint256 debugModeUntil = block.number + 1000000;
+    uint256 debugMode = true;
     
     function moduleHandler(address[] newOwners) multiOwner(newOwners) {}
     
@@ -152,7 +152,6 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
-            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModule", sha3(name, addr, callCallback))) ) {
                 return true;
             }
@@ -168,7 +167,6 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     
     function callReplaceCallback(string moduleName, address newModule) external returns (bool success) {
-        require( block.number < debugModeUntil );
         if ( ! insertAndCheckDo(calcDoHash("callReplaceCallback", sha3(moduleName, newModule))) ) {
             return true;
         }
@@ -191,7 +189,6 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
-            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("newModule", sha3(name, addr, schellingEvent, transferEvent))) ) {
                 return true;
             }
@@ -210,7 +207,6 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
-            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModule", sha3(name, callCallback))) ) {
                 return true;
             }
@@ -225,7 +221,6 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     
     function callDisableCallback(string moduleName) external returns (bool success) {
-        require( block.number < debugModeUntil );
         if ( ! insertAndCheckDo(calcDoHash("callDisableCallback", sha3(moduleName))) ) {
             return true;
         }
@@ -288,7 +283,6 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
-            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModuleHandler", sha3(newHandler))) ) {
                 return true;
             }
@@ -418,7 +412,6 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
-            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("configureModule", sha3(moduleName, aType, value))) ) {
                 return true;
             }
