@@ -5,7 +5,7 @@ pragma solidity ^0.4.11;
  * @title Token contract to call COR functions.
  */
 contract Token {
-    function transfer(address to, uint256 amount) isReady external returns (bool success) { }
+    function transfer(address to, uint256 amount) external returns (bool success) { }
 }
 
 /**
@@ -123,7 +123,7 @@ contract VotePool {
      * and `election_Target` will become one of the owners of Corion platform.
      */
     function evaluate_New_Owner_Election() {
-        ModleHandler moduleHandler = ModuleHandler(moduleHandlerAddress);
+        ModuleHandler moduleHandler = ModuleHandler(moduleHandlerAddress);
         moduleHandler.publicAddOwner(election_Target);
     }
     
