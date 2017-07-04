@@ -1,4 +1,30 @@
-Remix Solidity compiler 0.4.12+commit.194ff033 throws an error when trying to compile this contracts.
+I'm loading all these contracts to Remix:
+
+`..Compiler-Errors/announcementTypes.sol`
+
+`..Compiler-Errors/ico.sol`
+
+`..Compiler-Errors/module.sol`
+
+`..Compiler-Errors/moduleHandler.sol`
+
+`..Compiler-Errors/multiOwner.sol`
+
+`..Compiler-Errors/owned.sol`
+
+`..Compiler-Errors/premium.sol`
+
+`..Compiler-Errors/publisher.sol`
+
+`..Compiler-Errors/safeMath.sol`
+
+`..Compiler-Errors/token.sol`
+
+`..Compiler-Errors/tokenDB.sol`
+
+Remix Solidity compiler `0.4.11+commit.68ef5810` compiles this contracts without any errors.
+
+Remix Solidity compiler `0.4.12+commit.194ff033` throws an error when trying to compile this contracts.
 
 
 ```Internal exception in StandardCompiler::compileInternal: /src/libsolidity/ast/ASTJsonConverter.cpp(791): Throw in function string dev::solidity::ASTJsonConverter::functionCallKind(dev::solidity::FunctionCallKind)
