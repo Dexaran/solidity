@@ -6,4 +6,4 @@ tokenDB:       0x7233b36918259d11c7c48d9b0144d0d7e6ea7163
 premiumDB:     0x3e26a848ba0215e2d3199880f78dd7213c87de5d
 
 TOKEN:         0xb4c861108d7cf571d8e5fb2a174f98bc332fea45
-PREMIUM:       0xedc6e502d9d2ba0e4acebf99e3efdef3bd8b13fe
+PREMIUM:       0x4331a8b078032f7e46d62e6e67e0cb36ecb26822
