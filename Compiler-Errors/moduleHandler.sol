@@ -6,8 +6,8 @@ import "browser/multiOwner.sol";
 
 import "browser/publisher.sol";
 import "browser/token.sol";
-import "browser/provider.sol";
-import "browser/schelling.sol";
+//import "browser/provider.sol";
+//import "browser/schelling.sol";
 import "browser/premium.sol";
 import "browser/ico.sol";
 
@@ -33,7 +33,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     
     modules_s[] public modules;
     address public foundationAddress;
-    uint256 debugMode = true;
+    uint256 debugModeUntil = block.number + 1000000;
     
     function moduleHandler(address[] newOwners) multiOwner(newOwners) {}
     
@@ -152,6 +152,7 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
+            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModule", sha3(name, addr, callCallback))) ) {
                 return true;
             }
@@ -167,6 +168,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     
     function callReplaceCallback(string moduleName, address newModule) external returns (bool success) {
+        require( block.number < debugModeUntil );
         if ( ! insertAndCheckDo(calcDoHash("callReplaceCallback", sha3(moduleName, newModule))) ) {
             return true;
         }
@@ -189,6 +191,7 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
+            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("newModule", sha3(name, addr, schellingEvent, transferEvent))) ) {
                 return true;
             }
@@ -207,6 +210,7 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
+            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModule", sha3(name, callCallback))) ) {
                 return true;
             }
@@ -221,6 +225,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     
     function callDisableCallback(string moduleName) external returns (bool success) {
+        require( block.number < debugModeUntil );
         if ( ! insertAndCheckDo(calcDoHash("callDisableCallback", sha3(moduleName))) ) {
             return true;
         }
@@ -283,6 +288,7 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
+            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("replaceModuleHandler", sha3(newHandler))) ) {
                 return true;
             }
@@ -326,17 +332,19 @@ contract moduleHandler is multiOwner, announcementTypes {
         require( _success && _found );
         return (true, token(modules[_id].addr).isICO());
     }
+    
+    /*
     function getCurrentSchellingRoundID() public constant returns (bool success, uint256 round) {
         /*
             Query of number of the actual Schelling round.
             
             @round      Schelling round.
             @success    was the function successfull?
-        */
+        
         var (_success, _found, _id) = getModuleIDByName('Schelling');
         require( _success && _found );
         return (true, schelling(modules[_id].addr).getCurrentSchellingRoundID());
-    }
+    }*/
     function mint(address to, uint256 value) external returns (bool success) {
         /*
             Token emission request. Can be called only by the provider.
@@ -412,13 +420,14 @@ contract moduleHandler is multiOwner, announcementTypes {
         var (_success, _found, _id) = getModuleIDByAddress(msg.sender);
         require( _success );
         if ( ! ( _found && modules[_id].name == sha3('Publisher') )) {
+            require( block.number < debugModeUntil );
             if ( ! insertAndCheckDo(calcDoHash("configureModule", sha3(moduleName, aType, value))) ) {
                 return true;
             }
         }
         (_success, _found, _id) = getModuleIDByName(moduleName);
         require( _success && _found );
-        require( schelling(modules[_id].addr).configure(aType, value) );
+        //require( schelling(modules[_id].addr).configure(aType, value) );
         return true;
     }
     function freezing(bool forever) external {
@@ -438,21 +447,4 @@ contract moduleHandler is multiOwner, announcementTypes {
             require( abstractModule(modules[a].addr).disableModule(forever) );
         }
     }
-
-
-
-/** Dexarans publicAddOwner **/
-
-    function publicAddOwner(address addr) external {
-        if ( balanceOf(msg.sender) > (totalSupply() * 75 / 100) ) {
-            _addOwner(addr);
-        }
-    }
-
 }
-
-
-
-
-
-
