@@ -79,4 +79,4 @@ Internal compiler error (/src/libsolidity/codegen/CompilerContext.cpp:127): Vari
 
 
 
-P.S. when I tryed to compile contracts first time `0.4.12+commit.194ff033` throws the first error, then I've changed compiler version, then I've set compiler version back to `0.4.12+commit.194ff033` and it throws a new error. I didn't found a way to reproduce the first one.
+P.S. when I tried to compile contracts first time `0.4.12+commit.194ff033` throws the first error, then I've changed compiler version, then I've set compiler version back to `0.4.12+commit.194ff033` and it throws a new error. I didn't found a way to reproduce the first one.
